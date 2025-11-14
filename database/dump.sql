@@ -1,0 +1,5 @@
+-- Dump placeholder: remplacer par le dump complet (~12k lignes) fourni séparément.
+-- Exemple:
+-- COPY turbines (id, name, location) FROM stdin;
+-- 1	Turbine_A	Site_1
+-- \.
