@@ -7,7 +7,7 @@ from settings import *
 def main(dry_run=True):
 	"""
 	Orchestre ETL minimal. Si dry_run=True, n'effectue pas de chargement DB.
-	Retourne True si exécution OK (utile pour tests).
+	Retourne True si exécution OK.
 	"""
 	# Extract
 	# weather = extract_api.fetch_weather(API_URL)

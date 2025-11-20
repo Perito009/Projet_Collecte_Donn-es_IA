@@ -3,3 +3,5 @@ requests
 SQLAlchemy
 psycopg2-binary
 pytest
+python-dotenv>=1.0.0
+supabase>=1.0.0
