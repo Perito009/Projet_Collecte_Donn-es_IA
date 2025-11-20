@@ -1,8 +1,8 @@
 from Extract import extract_api, extract_csv, extract_db
 from Transform import transform_clean, transform_quality
-from Load import load_postgres
+
 from Graphics import dashboard_generator
-from settings import *
+
 
 def main(dry_run=True):
 	"""
@@ -21,7 +21,7 @@ def main(dry_run=True):
 		# load_postgres.load_dataframe(cleaned, 'measurements', PG_CONN)
 		pass
 	# Dashboard (example)
-	dashboard_generator.generate_dashboard("<p>Exemple</p>", DASHBOARD_PATH)
+	#dashboard_generator.generate_dashboard("<p>Exemple</p>", DASHBOARD_PATH)
 	return True
 
 if __name__ == '__main__':
