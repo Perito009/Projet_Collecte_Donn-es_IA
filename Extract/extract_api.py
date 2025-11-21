@@ -6,6 +6,8 @@ import sys
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+import os
+from datetime import datetime
 
 class TTLCache:
     """Simple in-memory TTL cache for API responses."""
@@ -91,6 +93,22 @@ def build_open_meteo_params(
         params["daily"] = ",".join(daily)
     return params
 
+def save_json(data: Any, filename: Optional[str] = None, directory: str = "energitic_pipeline") -> str:
+    """
+    Save Python-serializable `data` as JSON into `directory`.
+    Returns the path to the written file.
+    """
+    os.makedirs(directory, exist_ok=True)
+    if filename:
+        # sanitize filename
+        filename = "".join(c for c in filename if c.isalnum() or c in ("-", "_", ".")).strip()
+    else:
+        filename = f"response_{datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')}.json"
+    path = os.path.join(directory, filename)
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=2)
+    return path
+
 def fetch_open_meteo(
     lat: float,
     lon: float,
@@ -135,6 +153,7 @@ def main(argv=None):
     parser.add_argument("--lat", type=float, default=48.8566, help="Latitude for open-meteo (default Paris)")
     parser.add_argument("--lon", type=float, default=2.3522, help="Longitude for open-meteo (default Paris)")
     parser.add_argument("--url", type=str, help="URL to call for fetch_weather (mode 'url')")
+    parser.add_argument("--out", type=str, help="Output filename (saved in energitic_pipeline)")
 
     args = parser.parse_args(argv)
 
@@ -142,11 +161,22 @@ def main(argv=None):
         if args.mode == "open-meteo":
             print(f"Testing Open-Meteo for lat={args.lat} lon={args.lon} ...")
             data = fetch_open_meteo(args.lat, args.lon, hourly=("temperature_2m",), cache_ttl=0, timeout=10)
+            filename = args.out or f"open-meteo_{args.lat}_{args.lon}.json"
         else:
             if not args.url:
                 parser.error("--url is required when mode='url'")
             print(f"Testing fetch_weather against {args.url} ...")
             data = fetch_weather(args.url, params=None, cache_ttl=0, timeout=10)
+            # create a safe filename from URL
+            safe = args.url.replace("http://", "").replace("https://", "").replace("/", "_")
+            filename = args.out or f"url_{safe}.json"
+
+        # Save response to energitic_pipeline
+        try:
+            path = save_json(data, filename=filename, directory="energitic_pipeline")
+            print(f"Saved API response to: {path}")
+        except Exception as e:
+            print(f"Failed to save response: {e}", file=sys.stderr)
 
         if isinstance(data, dict):
             keys = list(data.keys())
