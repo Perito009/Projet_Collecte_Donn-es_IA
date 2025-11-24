@@ -1,5 +1,7 @@
 import requests
 import pytest
+
+from Extract.extract_api import requests
 from unittest.mock import patch, Mock
 
 # Essayer d'importer l'URL/constante d'API depuis extract_api.py
