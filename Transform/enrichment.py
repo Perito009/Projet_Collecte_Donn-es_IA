@@ -1,100 +1,94 @@
-# enrichment.py
+# test_enrichment.py
 import pandas as pd
-import hashlib
+import pytest
+from enrichment import (
+    normalize_wind_direction,
+    generate_unique_id,
+    add_turbine_id,
+    enrich_dataframe,
+    enrich_data,
+    WIND_DIRECTIONS,
+)
 
+def test_normalize_wind_direction():
+    # Test avec des directions connues
+    assert normalize_wind_direction("N") == "North"
+    assert normalize_wind_direction("S") == "South"
+    assert normalize_wind_direction("NE") == "Northeast"
+    assert normalize_wind_direction("SW") == "Southwest"
 
-# -------------------------------
-# 1. Normalisation direction vent
-# -------------------------------
+    # Test avec des directions en minuscules
+    assert normalize_wind_direction("ne") == "Northeast"
+    assert normalize_wind_direction(" s ") == "South"
 
-WIND_DIRECTIONS = {
-    "N": "North",
-    "S": "South",
-    "E": "East",
-    "W": "West",
-    "NE": "Northeast",
-    "NW": "Northwest",
-    "SE": "Southeast",
-    "SW": "Southwest",
-}
+    # Test avec une direction inconnue
+    assert normalize_wind_direction("XYZ") == "XYZ"
 
-def normalize_wind_direction(direction):
-    """
-    Convertit une direction vent brut en direction harmonisée.
-    Ex: 'NE' -> 'Northeast'
-    """
-    if pd.isnull(direction):
-        return None
+    # Test avec une valeur nulle
+    assert normalize_wind_direction(None) is None
+    assert pd.isna(normalize_wind_direction(pd.NA))
 
-    direction = str(direction).upper().strip()
-    return WIND_DIRECTIONS.get(direction, direction)  # garde valeur brute si inconnue
+def test_generate_unique_id():
+    # Test avec un dictionnaire contenant les clés attendues
+    row = {"ts_utc": "2025-01-01T12:00:00Z", "station_id": 1}
+    unique_id = generate_unique_id(row)
+    assert len(unique_id) == 32  # MD5 produit un hash de 32 caractères
 
+    # Test avec une clé manquante
+    row_missing = {"ts_utc": "2025-01-01T12:00:00Z"}
+    unique_id_missing = generate_unique_id(row_missing)
+    assert len(unique_id_missing) == 32
 
-# -------------------------------
-# 2. Génération d'identifiant unique
-# -------------------------------
+def test_add_turbine_id():
+    # Test avec un DataFrame contenant 'station_id'
+    df = pd.DataFrame({"station_id": [1, 2, 3]})
+    result = add_turbine_id(df)
+    assert "turbine_id" in result.columns
+    assert result["turbine_id"].tolist() == [1, 2, 3]
 
-def generate_unique_id(row):
-    """
-    Génère un identifiant unique basé sur timestamp + station/turbine.
-    """
-    base = f"{row.get('ts_utc', '')}-{row.get('station_id', '')}"
-    return hashlib.md5(base.encode()).hexdigest()
+    # Test avec un DataFrame sans 'station_id'
+    df_no_id = pd.DataFrame({"other_col": [1, 2, 3]})
+    result_no_id = add_turbine_id(df_no_id)
+    assert "turbine_id" in result_no_id.columns
+    assert result_no_id["turbine_id"].tolist() == [1, 2, 3]  # fallback
 
-
-# -------------------------------
-# 3. Ajout d'id de turbine
-# -------------------------------
-
-def add_turbine_id(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Ajoute un turbine_id, basé sur station_id si présent.
-    """
-    if "station_id" in df.columns:
-        df["turbine_id"] = df["station_id"]
-    else:
-        df["turbine_id"] = df.index + 1  # fallback simple
-
-    return df
-
-
-# -------------------------------
-# 4. Fonction principale d'enrichissement
-# -------------------------------
-
-def enrich_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    # Direction du vent
-    if "wind_direction" in df.columns:
-        df["wind_direction_full"] = df["wind_direction"].apply(normalize_wind_direction)
-
-    # Ajout du turbine_id
-    df = add_turbine_id(df)
-
-    # Identifiant unique
-    df["unique_id"] = df.apply(generate_unique_id, axis=1)
-
-    return df
-
-# Wrapper attendu par run_transform.py
-def enrich_data(df: pd.DataFrame) -> pd.DataFrame:
-    return enrich_dataframe(df)
-
-
-# -------------------------------
-# 5. TEST LOCAL (exécuté si tu tapes python enrichment.py)
-# -------------------------------
-
-if __name__ == "__main__":
+def test_enrich_dataframe():
+    # Test avec un DataFrame contenant toutes les colonnes attendues
     df = pd.DataFrame({
         "ts_utc": ["2025-01-01T12:00:00Z", "2025-01-01T14:00:00Z"],
         "station_id": [1, 2],
         "wind_direction": ["NE", "s"]
     })
+    result = enrich_dataframe(df)
+    assert "wind_direction_full" in result.columns
+    assert "turbine_id" in result.columns
+    assert "unique_id" in result.columns
+    assert result["wind_direction_full"].tolist() == ["Northeast", "South"]
+    assert result["turbine_id"].tolist() == [1, 2]
+    assert len(result["unique_id"].iloc[0]) == 32
 
-    print("=== Avant enrichment ===")
-    print(df)
+    # Test avec un DataFrame contenant des valeurs nulles
+    df_with_nan = pd.DataFrame({
+        "ts_utc": ["2025-01-01T12:00:00Z", None],
+        "station_id": [1, None],
+        "wind_direction": ["NE", None]
+    })
+    result_with_nan = enrich_dataframe(df_with_nan)
+    assert pd.isna(result_with_nan["wind_direction_full"].iloc[1])
+    assert result_with_nan["turbine_id"].tolist() == [1, 2]  # fallback
+    assert len(result_with_nan["unique_id"].iloc[0]) == 32
 
-    df = enrich_dataframe(df)
-
-    print("\n=== Après enrichment ===")
-    print(df)
+def test_enrich_data():
+    # Test que la fonction enrich_data est un wrapper pour enrich_dataframe
+    df = pd.DataFrame({
+        "ts_utc": ["2025-01-01T12:00:00Z", "2025-01-01T14:00:00Z"],
+        "station_id": [1, 2],
+        "wind_direction": ["NE", "s"]
+    })
+    result = enrich_data(df)
+    assert "wind_direction_full" in result.columns
+    assert "turbine_id" in result.columns
+    assert "unique_id" in result.columns
+    assert result["wind_direction_full"].tolist() == ["Northeast", "South"]
+    assert result["turbine_id"].tolist() == [1, 2]
+    assert len(result["unique_id"].iloc[0]) == 32

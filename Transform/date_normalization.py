@@ -1,34 +1,39 @@
-# date_normalization.py
-from datetime import datetime
+# test_date_normalization.py
 import pandas as pd
-import pytz
-from typing import Optional
+import pytest
+from date_normalization import normalize_timestamp_column, normalize_dates
 
-def normalize_timestamp_column(df: pd.DataFrame, column: str = "ts_utc") -> pd.DataFrame:
-    """
-    Compatibilité historique : convertit une colonne de timestamps en format
-    ISO localisé (Europe/Paris).
-    """
-    # Parse en UTC si possible, gérer les erreurs en produisant NaT
-    series = pd.to_datetime(df[column], errors="coerce", utc=True)
+def test_normalize_timestamp_column():
+    # Test avec des timestamps valides
+    df = pd.DataFrame({
+        "ts_utc": [
+            "2025-01-01T12:00:00Z",
+            "2025-01-01 15:30:00+00:00",
+            "2025-01-01T18:45:00+02:00"
+        ]
+    })
+    result = normalize_timestamp_column(df, "ts_utc")
 
-    # Convertir en timezone Europe/Paris
-    paris_tz = pytz.timezone("Europe/Paris")
-    series = series.dt.tz_convert(paris_tz)
+    # Vérifie que la colonne est bien formatée et convertie en Europe/Paris
+    assert all(isinstance(ts, str) for ts in result["ts_utc"])
+    assert all("+" in ts or ts.endswith("Z") for ts in result["ts_utc"])  # Format ISO avec offset
+    assert all(ts.endswith("0100") or ts.endswith("0200") for ts in result["ts_utc"])  # Offset Europe/Paris
 
-    # Format ISO sans séparateur ':' dans l'offset pour compatibilité simple
-    df[column] = series.dt.strftime("%Y-%m-%dT%H:%M:%S%z")
-    return df
+    # Test avec des timestamps invalides
+    df_with_invalid = pd.DataFrame({
+        "ts_utc": [
+            "2025-01-01T12:00:00Z",
+            "invalid date",
+            "2025-01-01 15:30:00+00:00"
+        ]
+    })
+    result_with_invalid = normalize_timestamp_column(df_with_invalid, "ts_utc")
 
-def normalize_dates(df: pd.DataFrame, column: str = "ts_utc") -> pd.DataFrame:
-    """
-    API attendue par run_transform.py — wrapper clair vers normalize_timestamp_column.
-    """
-    return normalize_timestamp_column(df, column=column)
+    # Vérifie que les timestamps invalides deviennent NaT (puis sont formatés en chaîne vide ou NaT)
+    assert pd.isna(pd.to_datetime(result_with_invalid["ts_utc"].iloc[1], errors="coerce"))
 
-
-# -------- TEST LOCAL SI TU LANCES python date_normalization.py ----------
-if __name__ == "__main__":
+def test_normalize_dates():
+    # Test que normalize_dates est un wrapper pour normalize_timestamp_column
     df = pd.DataFrame({
         "ts_utc": [
             "2025-01-01T12:00:00Z",
@@ -36,11 +41,9 @@ if __name__ == "__main__":
             "invalid date"
         ]
     })
+    result = normalize_dates(df, "ts_utc")
 
-    print("=== Avant normalisation ===")
-    print(df)
-
-    df = normalize_dates(df, "ts_utc")
-
-    print("\n=== Après normalisation ===")
-    print(df)
+    # Vérifie que la colonne est bien formatée et convertie en Europe/Paris
+    assert all(isinstance(ts, str) for ts in result["ts_utc"])
+    assert all("+" in ts or ts.endswith("Z") for ts in result["ts_utc"])  # Format ISO avec offset
+    assert pd.isna(pd.to_datetime(result["ts_utc"].iloc[2], errors="coerce"))  # Timestamp invalide

@@ -1,36 +1,59 @@
-# unit_conversion.py
+# test_unit_conversion.py
 import pandas as pd
+import pytest
+from unit_conversion import celsius_to_kelvin, kmh_to_ms, normalize_units, convert_units
 
-def celsius_to_kelvin(c):
-    return c + 273.15 if pd.notnull(c) else None
+def test_celsius_to_kelvin():
+    # Test avec des valeurs normales
+    assert celsius_to_kelvin(20) == 293.15
+    assert celsius_to_kelvin(0) == 273.15
+    assert celsius_to_kelvin(-10) == 263.15
 
-def kmh_to_ms(v):
-    return v / 3.6 if pd.notnull(v) else None
+    # Test avec une valeur nulle (NaN)
+    assert celsius_to_kelvin(None) is None
+    assert celsius_to_kelvin(pd.NA) is None
+    assert pd.isna(celsius_to_kelvin(pd.NA))
 
-def normalize_units(df: pd.DataFrame) -> pd.DataFrame:
-    if "temperature" in df.columns:
-        df["temperature_K"] = df["temperature"].apply(celsius_to_kelvin)
+def test_kmh_to_ms():
+    # Test avec des valeurs normales
+    assert kmh_to_ms(36) == 10.0
+    assert kmh_to_ms(10) == pytest.approx(2.777777778)
+    assert kmh_to_ms(90) == 25.0
 
-    if "wind_speed" in df.columns:
-        df["wind_speed_ms"] = df["wind_speed"].apply(kmh_to_ms)
+    # Test avec une valeur nulle (NaN)
+    assert kmh_to_ms(None) is None
+    assert kmh_to_ms(pd.NA) is None
+    assert pd.isna(kmh_to_ms(pd.NA))
 
-    return df
-
-# Wrapper attendu par run_transform.py
-def convert_units(df: pd.DataFrame) -> pd.DataFrame:
-    return normalize_units(df)
-
-# -------- TEST LOCAL SI TU LANCES python unit_conversion.py ----------
-if __name__ == "__main__":
+def test_normalize_units():
+    # Test avec un DataFrame contenant des valeurs normales
     df = pd.DataFrame({
         "temperature": [20, 0, -10],
         "wind_speed": [36, 10, 90]
     })
+    result = normalize_units(df)
+    assert "temperature_K" in result.columns
+    assert "wind_speed_ms" in result.columns
+    assert result["temperature_K"].tolist() == [293.15, 273.15, 263.15]
+    assert result["wind_speed_ms"].tolist() == [10.0, pytest.approx(2.777777778), 25.0]
 
-    print("=== Avant conversion ===")
-    print(df)
+    # Test avec un DataFrame contenant des valeurs nulles
+    df_with_nan = pd.DataFrame({
+        "temperature": [20, None, -10],
+        "wind_speed": [36, pd.NA, 90]
+    })
+    result_with_nan = normalize_units(df_with_nan)
+    assert pd.isna(result_with_nan["temperature_K"].iloc[1])
+    assert pd.isna(result_with_nan["wind_speed_ms"].iloc[1])
 
-    df = normalize_units(df)
-
-    print("\n=== Après conversion ===")
-    print(df)
+def test_convert_units():
+    # Test que la fonction convert_units est un wrapper pour normalize_units
+    df = pd.DataFrame({
+        "temperature": [20, 0, -10],
+        "wind_speed": [36, 10, 90]
+    })
+    result = convert_units(df)
+    assert "temperature_K" in result.columns
+    assert "wind_speed_ms" in result.columns
+    assert result["temperature_K"].tolist() == [293.15, 273.15, 263.15]
+    assert result["wind_speed_ms"].tolist() == [10.0, pytest.approx(2.777777778), 25.0]

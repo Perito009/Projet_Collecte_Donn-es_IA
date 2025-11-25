@@ -1,28 +1,17 @@
-import pytest
 import pandas as pd
-from Transform.unit_conversion import convert_units
 
-def test_convert_units():
-    # Sample DataFrame for testing
-    df = pd.DataFrame({
-        'length_m': [1.0, 2.0, 3.0],
-        'weight_kg': [10.0, 20.0, 30.0]
-    })
-    
-    # Unit mapping for conversion
-    unit_map = {
-        'length_m': 3.28084,  # Convert meters to feet
-        'weight_kg': 2.20462   # Convert kilograms to pounds
-    }
-    
-    # Expected DataFrame after conversion
-    expected_df = pd.DataFrame({
-        'length_m': [3.28084, 6.56168, 9.84252],
-        'weight_kg': [22.0462, 44.0924, 66.1386]
-    })
-    
-    # Perform unit conversion
-    converted_df = convert_units(df, unit_map)
-    
-    # Assert that the converted DataFrame matches the expected DataFrame
-    pd.testing.assert_frame_equal(converted_df, expected_df)
+def celsius_to_kelvin(c):
+    return c + 273.15 if pd.notnull(c) else None
+
+def kmh_to_ms(v):
+    return v / 3.6 if pd.notnull(v) else None
+
+def normalize_units(df: pd.DataFrame) -> pd.DataFrame:
+    if "temperature" in df.columns:
+        df["temperature_K"] = df["temperature"].apply(celsius_to_kelvin)
+    if "wind_speed" in df.columns:
+        df["wind_speed_ms"] = df["wind_speed"].apply(kmh_to_ms)
+    return df
+
+def convert_units(df: pd.DataFrame) -> pd.DataFrame:
+    return normalize_units(df)

@@ -1,14 +1,14 @@
+from datetime import datetime
 import pandas as pd
-import pytest
-from Transform.date_normalization import normalize_dates
+import pytz
+from typing import Optional
 
-def test_normalize_dates():
-    data = {
-        'date_col': ['2023-01-01', '01/02/2023', 'March 3, 2023', None, 'invalid_date']
-    }
-    df = pd.DataFrame(data)
-    expected_dates = pd.to_datetime(['2023-01-01', '2023-01-02', '2023-03-03', None, None])
-    
-    normalized_df = normalize_dates(df, ['date_col'])
-    
-    pd.testing.assert_series_equal(normalized_df['date_col'], expected_dates)
+def normalize_timestamp_column(df: pd.DataFrame, column: str = "ts_utc") -> pd.DataFrame:
+    series = pd.to_datetime(df[column], errors="coerce", utc=True)
+    paris_tz = pytz.timezone("Europe/Paris")
+    series = series.dt.tz_convert(paris_tz)
+    df[column] = series.dt.strftime("%Y-%m-%dT%H:%M:%S%z")
+    return df
+
+def normalize_dates(df: pd.DataFrame, column: str = "ts_utc") -> pd.DataFrame:
+    return normalize_timestamp_column(df, column=column)
