@@ -1,6 +1,7 @@
 {
     "python.analysis.extraPaths": [
         "./test_",
-        "./Extract"
+        "./Extract",
+        "./Transform"
     ]
 }

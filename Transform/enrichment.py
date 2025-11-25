@@ -75,6 +75,10 @@ def enrich_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+# Wrapper attendu par run_transform.py
+def enrich_data(df: pd.DataFrame) -> pd.DataFrame:
+    return enrich_dataframe(df)
+
 
 # -------------------------------
 # 5. TEST LOCAL (exécuté si tu tapes python enrichment.py)

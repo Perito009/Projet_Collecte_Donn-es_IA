@@ -45,24 +45,28 @@ def clean_data(df: pd.DataFrame, drop_anomalies: bool = False) -> pd.DataFrame:
     Option : supprimer totalement les lignes anormales.
     """
 
+    # S'assurer que les colonnes d'anomalies existent
+    if "wind_anomaly" not in df.columns or "temp_anomaly" not in df.columns:
+        df = detect_outliers(df)
+
     # --- Correction vent (km/h) ---
-    if "wind_speed" in df.columns:
+    if "wind_speed" in df.columns and df["wind_anomaly"].any():
         median_wind = df["wind_speed"].median()
         df.loc[df["wind_anomaly"], "wind_speed"] = median_wind
 
     # --- Correction vent (m/s) ---
-    if "wind_speed_ms" in df.columns:
+    if "wind_speed_ms" in df.columns and df["wind_anomaly"].any():
         median_wind_ms = df["wind_speed_ms"].median()
         df.loc[df["wind_anomaly"], "wind_speed_ms"] = median_wind_ms
 
     # --- Correction température ---
-    if "temperature" in df.columns:
+    if "temperature" in df.columns and df["temp_anomaly"].any():
         median_temp = df["temperature"].median()
         df.loc[df["temp_anomaly"], "temperature"] = median_temp
 
     # --- Option : suppression lignes anormales ---
     if drop_anomalies:
-        df = df[(df["wind_anomaly"] == False) & (df["temp_anomaly"] == False)]
+        df = df[(df["wind_anomaly"] == False) & (df["temp_anomaly"] == False)].reset_index(drop=True)
 
     return df
 

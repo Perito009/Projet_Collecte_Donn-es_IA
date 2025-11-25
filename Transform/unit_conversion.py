@@ -16,6 +16,9 @@ def normalize_units(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+# Wrapper attendu par run_transform.py
+def convert_units(df: pd.DataFrame) -> pd.DataFrame:
+    return normalize_units(df)
 
 # -------- TEST LOCAL SI TU LANCES python unit_conversion.py ----------
 if __name__ == "__main__":
