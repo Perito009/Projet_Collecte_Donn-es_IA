@@ -1,45 +1,31 @@
-name: CI - Run tests
+name: Python Tests
 
 on:
   push:
-    # Ne pas lancer sur push direct vers main ; exécutez sur les autres branches
-    branches-ignore:
-      - main
+    branches: [ "main", "Dev" ]  # Branches sur lesquelles déclencher les tests
   pull_request:
-    # Exécute les tests lorsqu'une PR cible la branche main
-    branches:
-      - main
+    branches: [ "main", "Dev" ]  # Tests aussi pour les pull requests
 
 jobs:
   test:
-    runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        python-version: ["3.11", "3.12"]
+    runs-on: ubuntu-latest  # Machine virtuelle pour exécuter les tests
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4  # Récupère le code du dépôt
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.12"  # Version de Python utilisée
 
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt  # Installe les dépendances
+        pip install -e .  # Installe le projet en mode editable (si setup.py existe)
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Run tests
-        run: |
-          pytest 
-        env:
-          CI: true
+    - name: Run tests
+      env:
+        PYTHONPATH: ${{ github.workspace }}  # Définit PYTHONPATH pour les imports
+      run: |
+        pytest tests/  # Exécute les tests
