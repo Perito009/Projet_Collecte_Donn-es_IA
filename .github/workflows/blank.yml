@@ -1,4 +1,4 @@
-name: Python Tests
+name: Python Verifpath
 
 on:
   push:
@@ -20,8 +20,18 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt  # Installe les dépendances
-        pip install -e .  # Installe le projet en mode editable (si setup.py existe)
+        python -m pip install --upgrade pip
+        # Installe les dépendances depuis requirements.txt si le fichier existe
+        if [ -f "requirements.txt" ]; then
+          pip install -r requirements.txt
+        else
+          # Installe les dépendances directement si requirements.txt est introuvable
+          pip install pandas pytest pytz requests
+        fi
+        # Installe le projet en mode editable si setup.py existe
+        if [ -f "setup.py" ]; then
+          pip install -e .
+        fi
 
     - name: Run tests
       env:
