@@ -1,59 +1,106 @@
-# test_unit_conversion.py
 import pandas as pd
-import pytest
-from unit_conversion import celsius_to_kelvin, kmh_to_ms, normalize_units, convert_units
+import sys
+from pathlib import Path
+import logging
 
-def test_celsius_to_kelvin():
-    # Test avec des valeurs normales
-    assert celsius_to_kelvin(20) == 293.15
-    assert celsius_to_kelvin(0) == 273.15
-    assert celsius_to_kelvin(-10) == 263.15
+# Configuration du logging
+logger = logging.getLogger(__name__)
 
-    # Test avec une valeur nulle (NaN)
-    assert celsius_to_kelvin(None) is None
-    assert celsius_to_kelvin(pd.NA) is None
-    assert pd.isna(celsius_to_kelvin(pd.NA))
+# Ajouter le chemin racine du projet au PYTHONPATH
+project_root = Path(__file__).resolve().parent.parent
+sys.path.append(str(project_root))
 
-def test_kmh_to_ms():
-    # Test avec des valeurs normales
-    assert kmh_to_ms(36) == 10.0
-    assert kmh_to_ms(10) == pytest.approx(2.777777778)
-    assert kmh_to_ms(90) == 25.0
+from Extract.extract_db import extract_data_to_dataframe
 
-    # Test avec une valeur nulle (NaN)
-    assert kmh_to_ms(None) is None
-    assert kmh_to_ms(pd.NA) is None
-    assert pd.isna(kmh_to_ms(pd.NA))
+def celsius_to_kelvin(celsius):
+    """Convertit une température en Celsius en Kelvin."""
+    if pd.isna(celsius):
+        return None
+    return celsius + 273.15
 
-def test_normalize_units():
-    # Test avec un DataFrame contenant des valeurs normales
-    df = pd.DataFrame({
-        "temperature": [20, 0, -10],
-        "wind_speed": [36, 10, 90]
-    })
-    result = normalize_units(df)
-    assert "temperature_K" in result.columns
-    assert "wind_speed_ms" in result.columns
-    assert result["temperature_K"].tolist() == [293.15, 273.15, 263.15]
-    assert result["wind_speed_ms"].tolist() == [10.0, pytest.approx(2.777777778), 25.0]
+def kmh_to_ms(kmh):
+    """Convertit une vitesse de km/h en m/s."""
+    if pd.isna(kmh):
+        return None
+    return kmh / 3.6
 
-    # Test avec un DataFrame contenant des valeurs nulles
-    df_with_nan = pd.DataFrame({
-        "temperature": [20, None, -10],
-        "wind_speed": [36, pd.NA, 90]
-    })
-    result_with_nan = normalize_units(df_with_nan)
-    assert pd.isna(result_with_nan["temperature_K"].iloc[1])
-    assert pd.isna(result_with_nan["wind_speed_ms"].iloc[1])
+def kwh_to_mwh(kwh):
+    """Convertit l'énergie de kWh en MWh."""
+    if pd.isna(kwh):
+        return None
+    return kwh / 1000
 
-def test_convert_units():
-    # Test que la fonction convert_units est un wrapper pour normalize_units
-    df = pd.DataFrame({
-        "temperature": [20, 0, -10],
-        "wind_speed": [36, 10, 90]
-    })
-    result = convert_units(df)
-    assert "temperature_K" in result.columns
-    assert "wind_speed_ms" in result.columns
-    assert result["temperature_K"].tolist() == [293.15, 273.15, 263.15]
-    assert result["wind_speed_ms"].tolist() == [10.0, pytest.approx(2.777777778), 25.0]
+def normalize_units(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Applique les conversions d'unités au DataFrame :
+    - Convertit 'temperature' de Celsius en Kelvin.
+    - Convertit 'wind_speed' de km/h en m/s.
+    - Convertit 'energie_kWh' en MWh.
+    """
+    try:
+        logger.info("Début des conversions d'unités")
+        
+        if df.empty:
+            logger.warning("DataFrame vide - aucune conversion effectuée")
+            return df
+        
+        # Conversion température Celsius → Kelvin
+        if "temperature" in df.columns:
+            df["temperature_K"] = df["temperature"].apply(celsius_to_kelvin)
+            logger.info(f"Température convertie: {df['temperature'].notna().sum()} valeurs")
+        
+        # Conversion vitesse vent km/h → m/s
+        if "wind_speed" in df.columns:
+            df["wind_speed_ms"] = df["wind_speed"].apply(kmh_to_ms)
+            logger.info(f"Vitesse vent convertie: {df['wind_speed'].notna().sum()} valeurs")
+        
+        # Conversion énergie kWh → MWh
+        if "energie_kWh" in df.columns:
+            df["energie_mwh"] = df["energie_kWh"].apply(kwh_to_mwh)
+            logger.info(f"Énergie convertie: {df['energie_kWh'].notna().sum()} valeurs")
+        
+        logger.info("Conversions d'unités terminées")
+        return df
+        
+    except Exception as e:
+        logger.error(f"Erreur lors de la conversion des unités: {e}")
+        return df
+
+def convert_units_from_db() -> pd.DataFrame:
+    """
+    Extrait les données depuis la base de données et applique les conversions d'unités.
+    """
+    try:
+        logger.info("Extraction des données depuis la base de données...")
+        df = extract_data_to_dataframe()
+        
+        if df.empty:
+            logger.warning("Aucune donnée extraite de la base de données")
+            return df
+        
+        logger.info(f"Données extraites: {len(df)} lignes")
+        
+        # Appliquer les conversions d'unités
+        df_converted = normalize_units(df)
+        
+        return df_converted
+        
+    except Exception as e:
+        logger.error(f"Erreur lors de l'extraction et conversion: {e}")
+        return pd.DataFrame()
+
+if __name__ == "__main__":
+    # Configuration du logging pour le test
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    
+    # Test avec extraction depuis la base de données
+    print("=== Test de conversion d'unités ===")
+    df_converted = convert_units_from_db()
+    
+    if not df_converted.empty:
+        print(f"DataFrame converti - Shape: {df_converted.shape}")
+        print(f"Colonnes: {df_converted.columns.tolist()}")
+        print("\nAperçu des données:")
+        print(df_converted.head())
+    else:
+        print("Aucune donnée à afficher")

@@ -1,97 +1,104 @@
-# data_cleaning.py
+# Transform/data_cleaning.py
 import pandas as pd
-import numpy as np
+import logging
+from Extract.extract_db import extract_data_to_dataframe
 
-
-# ---------------------------------------------------------
-# 1. Détection d'anomalies (outliers)
-# ---------------------------------------------------------
+# Configuration du logging
+logger = logging.getLogger(__name__)
 
 def detect_outliers(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Ajoute des colonnes 'wind_anomaly' et 'temp_anomaly'
-    pour repérer les valeurs aberrantes.
+    Détecte les valeurs aberrantes avec une méthode IQR simple.
     """
+    df["energy_anomaly"] = False
 
-    # Création des colonnes par défaut
-    df["wind_anomaly"] = False
-    df["temp_anomaly"] = False
-
-    # --- Détection anomalies vent ---
-    # km/h > 150
-    if "wind_speed" in df.columns:
-        df.loc[df["wind_speed"] > 150, "wind_anomaly"] = True
-
-    # m/s > 41.67
-    if "wind_speed_ms" in df.columns:
-        df.loc[df["wind_speed_ms"] > 41.67, "wind_anomaly"] = True
-
-    # --- Détection anomalies température ---
-    if "temperature" in df.columns:
-        df.loc[(df["temperature"] < -80) | (df["temperature"] > 60), "temp_anomaly"] = True
-
-    # si tu veux détecter plus (humidité, pression, etc.), je peux l’ajouter
+    # Détection pour l'énergie
+    if "energie_kWh" in df.columns and "turbin_id" in df.columns:
+        for turbine in df["turbin_id"].unique():
+            mask = df["turbin_id"] == turbine
+            values = df[mask]["energie_kWh"].dropna()
+            
+            if len(values) >= 4:  # Minimum pour calculer les quartiles
+                Q1 = values.quantile(0.25)
+                Q3 = values.quantile(0.75)
+                IQR = Q3 - Q1
+                lower_bound = Q1 - 1.5 * IQR
+                upper_bound = Q3 + 1.5 * IQR
+                
+                # Marquer les outliers
+                outliers_mask = mask & ((df["energie_kWh"] < lower_bound) | (df["energie_kWh"] > upper_bound))
+                df.loc[outliers_mask, "energy_anomaly"] = True
+                logger.info(f"Outliers détectés pour {turbine}: {outliers_mask.sum()}")
 
     return df
 
-
-# ---------------------------------------------------------
-# 2. Nettoyage & correction des anomalies
-# ---------------------------------------------------------
-
-def clean_data(df: pd.DataFrame, drop_anomalies: bool = False) -> pd.DataFrame:
+def fill_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Corrige les valeurs aberrantes en remplaçant par la médiane.
-    Option : supprimer totalement les lignes anormales.
+    Corrige les valeurs manquantes.
     """
+    # Énergie - imputation par médiane
+    if "energie_kWh" in df.columns and "turbin_id" in df.columns:
+        for turbine in df["turbin_id"].unique():
+            mask = (df["turbin_id"] == turbine) & (df["energie_kWh"].isna())
+            if mask.any():
+                median_energy = df[df["turbin_id"] == turbine]["energie_kWh"].median()
+                df.loc[mask, "energie_kWh"] = median_energy
+                logger.info(f"Valeurs manquantes remplacées pour {turbine}: {mask.sum()}")
 
-    # S'assurer que les colonnes d'anomalies existent
-    if "wind_anomaly" not in df.columns or "temp_anomaly" not in df.columns:
+    # Variables binaires
+    for col in ["arret_planifie", "arret_non_planifie"]:
+        if col in df.columns:
+            df[col] = df[col].fillna(0)
+
+    return df
+
+def handle_outliers(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Corrige les outliers.
+    """
+    if "energy_anomaly" in df.columns and "turbin_id" in df.columns:
+        for turbine in df["turbin_id"].unique():
+            mask = (df["turbin_id"] == turbine) & (df["energy_anomaly"] == True)
+            if mask.any():
+                # Calculer la médiane sans les outliers
+                normal_data = df[(df["turbin_id"] == turbine) & (df["energy_anomaly"] == False)]
+                if not normal_data.empty:
+                    median_energy = normal_data["energie_kWh"].median()
+                    df.loc[mask, "energie_kWh"] = median_energy
+                    logger.info(f"Outliers corrigés pour {turbine}: {mask.sum()}")
+
+    return df
+
+def clean_data_from_db() -> pd.DataFrame:
+    """
+    Nettoie les données depuis la base.
+    """
+    try:
+        logger.info("Extraction des données...")
+        df = extract_data_to_dataframe()
+        
+        if df.empty:
+            return df
+
+        logger.info("Nettoyage des données...")
         df = detect_outliers(df)
-
-    # --- Correction vent (km/h) ---
-    if "wind_speed" in df.columns and df["wind_anomaly"].any():
-        median_wind = df["wind_speed"].median()
-        df.loc[df["wind_anomaly"], "wind_speed"] = median_wind
-
-    # --- Correction vent (m/s) ---
-    if "wind_speed_ms" in df.columns and df["wind_anomaly"].any():
-        median_wind_ms = df["wind_speed_ms"].median()
-        df.loc[df["wind_anomaly"], "wind_speed_ms"] = median_wind_ms
-
-    # --- Correction température ---
-    if "temperature" in df.columns and df["temp_anomaly"].any():
-        median_temp = df["temperature"].median()
-        df.loc[df["temp_anomaly"], "temperature"] = median_temp
-
-    # --- Option : suppression lignes anormales ---
-    if drop_anomalies:
-        df = df[(df["wind_anomaly"] == False) & (df["temp_anomaly"] == False)].reset_index(drop=True)
-
-    return df
-
-
-# ---------------------------------------------------------
-# 3. TEST LOCAL — exécuté uniquement si tu fais :
-#     python data_cleaning.py
-# ---------------------------------------------------------
+        df = fill_missing_values(df)
+        df = handle_outliers(df)
+        
+        logger.info("Nettoyage terminé")
+        return df
+        
+    except Exception as e:
+        logger.error(f"Erreur: {e}")
+        return pd.DataFrame()
 
 if __name__ == "__main__":
-    df = pd.DataFrame({
-        "wind_speed": [20, 200, 10],     # 200 km/h = aberrant
-        "wind_speed_ms": [5, 60, 3],     # 60 m/s = aberrant
-        "temperature": [10, -100, 30]    # -100°C = aberrant
-    })
-
-    print("=== Avant nettoyage ===")
-    print(df)
-
-    # Détection
-    df = detect_outliers(df)
-    print("\n=== Après détection d'anomalies ===")
-    print(df)
-
-    # Nettoyage
-    df = clean_data(df)
-    print("\n=== Après correction ===")
-    print(df)
+    logging.basicConfig(level=logging.INFO)
+    
+    df_clean = clean_data_from_db()
+    
+    if not df_clean.empty:
+        print(f"Données nettoyées: {df_clean.shape}")
+        print(df_clean.head())
+    else:
+        print("Aucune donnée")
