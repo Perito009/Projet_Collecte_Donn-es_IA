@@ -9,3 +9,117 @@ Upsert de 60 lignes dans la table raw_measurements...
 Upsert terminé !
 data=[{'meas_id': 89281, 'turbine_id': 'T001', 'ts_utc': '2025-11-01T00:00:00', 'wind_speed_mps': 9.5, 'temperature_k': 266.11, 'vibration_mm_s': 8.03, 'consumption_kwh': 30612.86}, {'meas_id': 89282, 'turbine_id': 'T002', 'ts_utc': '2025-11-01T00:00:00', 'wind_speed_mps': 14.05, 'temperature_k': 296.71, 'vibration_mm_s': 7.76, 'consumption_kwh': 19978.79}, {'meas_id': 92161, 'turbine_id': 'T001', 'ts_utc': '2025-11-02T00:00:00', 'wind_speed_mps': 11.27, 'temperature_k': 287.39, 'vibration_mm_s': 7.34, 'consumption_kwh': 39333.69}, {'meas_id': 92162, 'turbine_id': 'T002', 'ts_utc': '2025-11-02T00:00:00', 'wind_speed_mps': 8.75, 'temperature_k': 280.9, 'vibration_mm_s': 8.0, 'consumption_kwh': 23620.68}, {'meas_id': 95041, 'turbine_id': 'T001', 'ts_utc': '2025-11-03T00:00:00', 'wind_speed_mps': 6.74, 'temperature_k': 283.69, 'vibration_mm_s': 1.71, 'consumption_kwh': None}, {'meas_id': 95042, 'turbine_id': 'T002', 'ts_utc': '2025-11-03T00:00:00', 'wind_speed_mps': 13.27, 'temperature_k': 299.34, 'vibration_mm_s': 2.63, 'consumption_kwh': 31081.96}, {'meas_id': 97921, 'turbine_id': 'T001', 'ts_utc': '2025-11-04T00:00:00', 'wind_speed_mps': 10.54, 'temperature_k': 264.04, 'vibration_mm_s': 0.7, 'consumption_kwh': None}, {'meas_id': 97922, 'turbine_id': 'T002', 'ts_utc': '2025-11-04T00:00:00', 'wind_speed_mps': 5.4, 'temperature_k': 271.82, 'vibration_mm_s': 5.43, 'consumption_kwh': 12074.57}, {'meas_id': 100801, 'turbine_id': 'T001', 'ts_utc': '2025-11-05T00:00:00', 'wind_speed_mps': 4.98, 'temperature_k': 270.84, 'vibration_mm_s': 0.2, 'consumption_kwh': 30991.31}, {'meas_id': 100802, 'turbine_id': 'T002', 'ts_utc': '2025-11-05T00:00:00', 'wind_speed_mps': 5.13, 'temperature_k': 292.25, 'vibration_mm_s': 11.59, 'consumption_kwh': 30195.94}, {'meas_id': 103681, 'turbine_id': 'T001', 'ts_utc': '2025-11-06T00:00:00', 'wind_speed_mps': 14.53, 'temperature_k': 298.36, 'vibration_mm_s': 11.65, 'consumption_kwh': 32777.72}, {'meas_id': 103682, 'turbine_id': 'T002', 'ts_utc': '2025-11-06T00:00:00', 'wind_speed_mps': 13.03, 'temperature_k': 265.4, 'vibration_mm_s': 1.21, 'consumption_kwh': 28666.06}, {'meas_id': 106561, 'turbine_id': 'T001', 'ts_utc': '2025-11-07T00:00:00', 'wind_speed_mps': 13.93, 'temperature_k': 282.09, 'vibration_mm_s': 6.57, 'consumption_kwh': 33746.2}, {'meas_id': 106562, 'turbine_id': 'T002', 'ts_utc': '2025-11-07T00:00:00', 'wind_speed_mps': 3.62, 'temperature_k': 284.01, 'vibration_mm_s': 2.83, 'consumption_kwh': 20111.19}, {'meas_id': 109441, 'turbine_id': 'T001', 'ts_utc': '2025-11-08T00:00:00', 'wind_speed_mps': 7.69, 'temperature_k': 290.86, 'vibration_mm_s': 6.19, 'consumption_kwh': 25042.75}, {'meas_id': 109442, 'turbine_id': 'T002', 'ts_utc': '2025-11-08T00:00:00', 'wind_speed_mps': 12.25, 'temperature_k': 272.43, 'vibration_mm_s': 0.99, 'consumption_kwh': None}, {'meas_id': 112321, 'turbine_id': 'T001', 'ts_utc': '2025-11-09T00:00:00', 'wind_speed_mps': 5.65, 'temperature_k': 264.33, 'vibration_mm_s': 0.34, 'consumption_kwh': 25387.95}, {'meas_id': 112322, 'turbine_id': 'T002', 'ts_utc': '2025-11-09T00:00:00', 'wind_speed_mps': 3.52, 'temperature_k': 261.69, 'vibration_mm_s': 8.24, 'consumption_kwh': None}, {'meas_id': 115201, 'turbine_id': 'T001', 'ts_utc': '2025-11-10T00:00:00', 'wind_speed_mps': 12.74, 'temperature_k': 299.7, 'vibration_mm_s': 9.52, 'consumption_kwh': 24695.37}, {'meas_id': 115202, 'turbine_id': 'T002', 'ts_utc': '2025-11-10T00:00:00', 'wind_speed_mps': 6.71, 'temperature_k': 266.94, 'vibration_mm_s': 11.15, 'consumption_kwh': 21829.46}, {'meas_id': 118081, 'turbine_id': 'T001', 'ts_utc': '2025-11-11T00:00:00', 'wind_speed_mps': 4.04, 'temperature_k': 268.88, 'vibration_mm_s': 8.34, 'consumption_kwh': 36429.14}, {'meas_id': 118082, 'turbine_id': 'T002', 'ts_utc': '2025-11-11T00:00:00', 'wind_speed_mps': 10.29, 'temperature_k': 272.92, 'vibration_mm_s': 4.29, 'consumption_kwh': 30758.08}, {'meas_id': 120961, 'turbine_id': 'T001', 'ts_utc': '2025-11-12T00:00:00', 'wind_speed_mps': 3.47, 'temperature_k': 271.23, 'vibration_mm_s': 7.67, 'consumption_kwh': 25053.14}, {'meas_id': 120962, 'turbine_id': 'T002', 'ts_utc': '2025-11-12T00:00:00', 'wind_speed_mps': 10.98, 'temperature_k': 263.53, 'vibration_mm_s': 5.62, 'consumption_kwh': 24009.49}, {'meas_id': 123841, 'turbine_id': 'T001', 'ts_utc': '2025-11-13T00:00:00', 'wind_speed_mps': 9.77, 'temperature_k': 289.69, 'vibration_mm_s': 7.86, 'consumption_kwh': 22048.81}, {'meas_id': 123842, 'turbine_id': 'T002', 'ts_utc': '2025-11-13T00:00:00', 'wind_speed_mps': 8.72, 'temperature_k': 295.94, 'vibration_mm_s': 9.45, 'consumption_kwh': 27545.6}, {'meas_id': 126721, 'turbine_id': 'T001', 'ts_utc': '2025-11-14T00:00:00', 'wind_speed_mps': 3.5, 'temperature_k': 288.68, 'vibration_mm_s': 5.85, 'consumption_kwh': 34364.31}, {'meas_id': 126722, 'turbine_id': 'T002', 'ts_utc': '2025-11-14T00:00:00', 'wind_speed_mps': 14.0, 'temperature_k': 277.76, 'vibration_mm_s': 3.16, 'consumption_kwh': 27868.47}, {'meas_id': 129601, 'turbine_id': 'T001', 'ts_utc': '2025-11-15T00:00:00', 'wind_speed_mps': 13.55, 'temperature_k': 262.63, 'vibration_mm_s': 9.21, 'consumption_kwh': 47113.17}, {'meas_id': 129602, 'turbine_id': 'T002', 'ts_utc': '2025-11-15T00:00:00', 'wind_speed_mps': 14.13, 'temperature_k': 280.43, 'vibration_mm_s': 4.56, 'consumption_kwh': 17388.71}, {'meas_id': 132481, 'turbine_id': 'T001', 'ts_utc': '2025-11-16T00:00:00', 'wind_speed_mps': 9.63, 'temperature_k': 285.02, 'vibration_mm_s': 9.28, 'consumption_kwh': 36733.11}, {'meas_id': 132482, 'turbine_id': 'T002', 'ts_utc': '2025-11-16T00:00:00', 'wind_speed_mps': 6.82, 'temperature_k': 272.03, 'vibration_mm_s': 0.18, 'consumption_kwh': None}, {'meas_id': 135361, 'turbine_id': 'T001', 'ts_utc': '2025-11-17T00:00:00', 'wind_speed_mps': 6.25, 'temperature_k': 265.85, 'vibration_mm_s': 0.3, 'consumption_kwh': 26652.63}, {'meas_id': 135362, 'turbine_id': 'T002', 'ts_utc': '2025-11-17T00:00:00', 'wind_speed_mps': 4.14, 'temperature_k': 288.08, 'vibration_mm_s': 8.91, 'consumption_kwh': 23606.25}, {'meas_id': 138241, 'turbine_id': 'T001', 'ts_utc': '2025-11-18T00:00:00', 'wind_speed_mps': 8.07, 'temperature_k': 298.58, 'vibration_mm_s': 7.84, 'consumption_kwh': 33014.56}, {'meas_id': 138242, 'turbine_id': 'T002', 'ts_utc': '2025-11-18T00:00:00', 'wind_speed_mps': 13.62, 'temperature_k': 296.85, 'vibration_mm_s': 11.45, 'consumption_kwh': 23480.48}, {'meas_id': 141121, 'turbine_id': 'T001', 'ts_utc': '2025-11-19T00:00:00', 'wind_speed_mps': 14.45, 'temperature_k': 270.35, 'vibration_mm_s': 9.19, 'consumption_kwh': 33002.92}, {'meas_id': 141122, 'turbine_id': 'T002', 'ts_utc': '2025-11-19T00:00:00', 'wind_speed_mps': 4.17, 'temperature_k': 273.89, 'vibration_mm_s': 3.06, 'consumption_kwh': None}, {'meas_id': 144001, 'turbine_id': 'T001', 'ts_utc': '2025-11-20T00:00:00', 'wind_speed_mps': 6.88, 'temperature_k': 297.59, 'vibration_mm_s': 7.13, 'consumption_kwh': 19039.67}, {'meas_id': 144002, 'turbine_id': 'T002', 'ts_utc': '2025-11-20T00:00:00', 'wind_speed_mps': 10.18, 'temperature_k': 289.58, 'vibration_mm_s': 5.39, 'consumption_kwh': 32583.93}, {'meas_id': 146881, 'turbine_id': 'T001', 'ts_utc': '2025-11-21T00:00:00', 'wind_speed_mps': 4.55, 'temperature_k': 281.02, 'vibration_mm_s': 4.51, 'consumption_kwh': 20527.89}, {'meas_id': 146882, 'turbine_id': 'T002', 'ts_utc': '2025-11-21T00:00:00', 'wind_speed_mps': 6.69, 'temperature_k': 275.22, 'vibration_mm_s': 2.77, 'consumption_kwh': 24360.54}, {'meas_id': 149761, 'turbine_id': 'T001', 'ts_utc': '2025-11-22T00:00:00', 'wind_speed_mps': 10.59, 'temperature_k': 287.41, 'vibration_mm_s': 9.31, 'consumption_kwh': 27265.94}, {'meas_id': 149762, 'turbine_id': 'T002', 'ts_utc': '2025-11-22T00:00:00', 'wind_speed_mps': 3.69, 'temperature_k': 283.32, 'vibration_mm_s': 3.35, 'consumption_kwh': 22132.33}, {'meas_id': 152641, 'turbine_id': 'T001', 'ts_utc': '2025-11-23T00:00:00', 'wind_speed_mps': 6.22, 'temperature_k': 266.87, 'vibration_mm_s': 2.71, 'consumption_kwh': 35433.46}, {'meas_id': 152642, 'turbine_id': 'T002', 'ts_utc': '2025-11-23T00:00:00', 'wind_speed_mps': 4.28, 'temperature_k': 276.28, 'vibration_mm_s': 11.87, 'consumption_kwh': 23872.3}, {'meas_id': 155521, 'turbine_id': 'T001', 'ts_utc': '2025-11-24T00:00:00', 'wind_speed_mps': 7.2, 'temperature_k': 275.11, 'vibration_mm_s': 4.44, 'consumption_kwh': 29562.49}, {'meas_id': 155522, 'turbine_id': 'T002', 'ts_utc': '2025-11-24T00:00:00', 'wind_speed_mps': 10.31, 'temperature_k': 263.57, 'vibration_mm_s': 5.63, 'consumption_kwh': 11717.12}, {'meas_id': 158401, 'turbine_id': 'T001', 'ts_utc': '2025-11-25T00:00:00', 'wind_speed_mps': 10.97, 'temperature_k': 279.95, 'vibration_mm_s': 8.3, 'consumption_kwh': 31369.79}, {'meas_id': 158402, 'turbine_id': 'T002', 'ts_utc': '2025-11-25T00:00:00', 'wind_speed_mps': 14.47, 'temperature_k': 267.3, 'vibration_mm_s': 9.22, 'consumption_kwh': 21998.16}, {'meas_id': 161281, 'turbine_id': 'T001', 'ts_utc': '2025-11-26T00:00:00', 'wind_speed_mps': 6.49, 'temperature_k': 267.87, 'vibration_mm_s': 4.45, 'consumption_kwh': 27200.07}, {'meas_id': 161282, 'turbine_id': 'T002', 'ts_utc': '2025-11-26T00:00:00', 'wind_speed_mps': 14.76, 'temperature_k': 294.83, 'vibration_mm_s': 6.25, 'consumption_kwh': 0.0}, {'meas_id': 164161, 'turbine_id': 'T001', 'ts_utc': '2025-11-27T00:00:00', 'wind_speed_mps': 4.8, 'temperature_k': 266.77, 'vibration_mm_s': 1.87, 'consumption_kwh': 34439.08}, {'meas_id': 164162, 'turbine_id': 'T002', 'ts_utc': '2025-11-27T00:00:00', 'wind_speed_mps': 7.23, 'temperature_k': 289.31, 'vibration_mm_s': 6.18, 'consumption_kwh': 24535.09}, {'meas_id': 167041, 'turbine_id': 'T001', 'ts_utc': '2025-11-28T00:00:00', 'wind_speed_mps': 6.95, 'temperature_k': 265.37, 'vibration_mm_s': 9.28, 'consumption_kwh': 37816.31}, {'meas_id': 167042, 'turbine_id': 'T002', 'ts_utc': '2025-11-28T00:00:00', 'wind_speed_mps': 6.15, 'temperature_k': 264.08, 'vibration_mm_s': 9.99, 'consumption_kwh': 23550.36}, {'meas_id': 169921, 'turbine_id': 'T001', 'ts_utc': '2025-11-29T00:00:00', 'wind_speed_mps': 10.66, 'temperature_k': 263.99, 'vibration_mm_s': 10.89, 'consumption_kwh': 0.0}, {'meas_id': 169922, 'turbine_id': 'T002', 'ts_utc': '2025-11-29T00:00:00', 'wind_speed_mps': 11.2, 'temperature_k': 275.42, 'vibration_mm_s': 6.2, 'consumption_kwh': 30391.51}, {'meas_id': 172801, 'turbine_id': 'T001', 'ts_utc': '2025-11-30T00:00:00', 'wind_speed_mps': 3.5, 'temperature_k': 298.75, 'vibration_mm_s': 3.97, 'consumption_kwh': 17660.11}, {'meas_id': 172802, 'turbine_id': 'T002', 'ts_utc': '2025-11-30T00:00:00', 'wind_speed_mps': 14.68, 'temperature_k': 292.26, 'vibration_mm_s': 9.54, 'consumption_kwh': 47814.26}] count=None
 2025-11-30 16:27:02,975 - INFO - 🎉 Pipeline terminé avec succès!
+2025-12-01 12:07:14,738 - INFO - 🎯 Démarrage du pipeline complet...
+2025-12-01 12:07:17,203 - INFO - Aucun fichier de production détecté. Lancement de l'extraction depuis la base de données...
+2025-12-01 12:07:17,203 - INFO - Début de l'extraction depuis la base de données...
+2025-12-01 12:07:18,480 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-11-30T12%3A07%3A17.451907 "HTTP/2 200 OK"
+2025-12-01 12:07:18,512 - INFO - ✅ Extraction DB terminée. 1000 lignes extraites.
+2025-12-01 12:07:18,512 - INFO - 🚀 Démarrage du pipeline de transformation...
+2025-12-01 12:07:18,512 - INFO - Début du nettoyage des données...
+2025-12-01 12:07:18,555 - INFO - Extraction des données...
+2025-12-01 12:07:18,896 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-11-30T12%3A07%3A18.579765 "HTTP/2 200 OK"
+2025-12-01 12:07:18,945 - INFO - Nettoyage des données...
+2025-12-01 12:07:18,957 - INFO - Nettoyage terminé
+2025-12-01 12:07:18,958 - INFO - ✅ Nettoyage terminé. 1000 lignes traitées.
+2025-12-01 12:07:18,958 - INFO - Début de la normalisation des dates...
+2025-12-01 12:07:18,958 - INFO - Extraction des données depuis la base de données...
+2025-12-01 12:07:19,332 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-11-30T12%3A07%3A19.006912 "HTTP/2 200 OK"
+2025-12-01 12:07:19,353 - INFO - Données extraites: 1000 lignes, 7 colonnes
+2025-12-01 12:07:19,353 - INFO - Début de la normalisation de la colonne 'ts_utc'
+2025-12-01 12:07:19,571 - INFO - Normalisation terminée: 1000 timestamps traités, 0 valeurs manquantes
+2025-12-01 12:07:19,571 - INFO - ✅ Normalisation des dates terminée.
+2025-12-01 12:07:19,571 - INFO - Début de la conversion des unités...
+2025-12-01 12:07:19,571 - INFO - Extraction des données depuis la base de données...
+2025-12-01 12:07:19,865 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-11-30T12%3A07%3A19.593956 "HTTP/2 200 OK"
+2025-12-01 12:07:19,888 - INFO - Données extraites: 1000 lignes
+2025-12-01 12:07:19,888 - INFO - Début des conversions d'unités
+2025-12-01 12:07:19,888 - INFO - Conversions d'unités terminées
+2025-12-01 12:07:19,888 - INFO - ✅ Conversion des unités terminée.
+2025-12-01 12:07:19,888 - INFO - ✨ Pipeline Transform terminé avec succès!
+2025-12-01 12:07:19,901 - INFO - 🎉 Pipeline terminé avec succès!
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+
+📥 Données initiales extraites: 1000 lignes, 7 colonnes
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+
+==================================================
+📊 RÉSUMÉ DU PIPELINE
+==================================================
+📈 Nombre total d'enregistrements: 1000
+🏷️  Nombre de colonnes: 7
+📋 Colonnes disponibles: ['meas_id', 'turbine_id', 'ts_utc', 'wind_speed_mps', 'temperature_k', 'vibration_mm_s', 'consumption_kwh']
+
+📊 Aperçu des données:
+   meas_id turbine_id  ... vibration_mm_s  consumption_kwh
+0   174257       T001  ...           3.98           801.48
+1   174258       T002  ...           6.81           921.66
+2   174259       T001  ...           7.27           927.03
+3   174260       T002  ...          11.33           918.54
+4   174261       T001  ...           8.51          1124.07
+
+[5 rows x 7 columns]
+
+✅ Aucune valeur manquante détectée
+2025-12-01 12:15:33,258 - INFO - 🎯 Démarrage du pipeline complet...
+2025-12-01 12:15:33,551 - INFO - Aucun fichier de production détecté. Lancement de l'extraction depuis la base de données...
+2025-12-01 12:15:33,551 - INFO - Début de l'extraction depuis la base de données...
+2025-12-01 12:15:34,757 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-11-30T12%3A15%3A33.631403 "HTTP/2 200 OK"
+2025-12-01 12:15:34,783 - INFO - ✅ Extraction DB terminée. 1000 lignes extraites.
+2025-12-01 12:15:34,783 - INFO - 🚀 Démarrage du pipeline de transformation...
+2025-12-01 12:15:34,783 - INFO - Début du nettoyage des données...
+2025-12-01 12:15:34,784 - INFO - Extraction des données...
+2025-12-01 12:15:35,090 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-11-30T12%3A15%3A34.809583 "HTTP/2 200 OK"
+2025-12-01 12:15:35,114 - INFO - Nettoyage des données...
+2025-12-01 12:15:35,114 - INFO - Nettoyage terminé
+2025-12-01 12:15:35,114 - INFO - ✅ Nettoyage terminé. 1000 lignes traitées.
+2025-12-01 12:15:35,115 - INFO - Début de la normalisation des dates...
+2025-12-01 12:15:35,115 - INFO - Extraction des données depuis la base de données...
+2025-12-01 12:15:35,361 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-11-30T12%3A15%3A35.138119 "HTTP/2 200 OK"
+2025-12-01 12:15:35,387 - INFO - Données extraites: 1000 lignes, 7 colonnes
+2025-12-01 12:15:35,387 - INFO - Début de la normalisation de la colonne 'ts_utc'
+2025-12-01 12:15:35,423 - INFO - Normalisation terminée: 1000 timestamps traités, 0 valeurs manquantes
+2025-12-01 12:15:35,423 - INFO - ✅ Normalisation des dates terminée.
+2025-12-01 12:15:35,423 - INFO - Début de la conversion des unités...
+2025-12-01 12:15:35,423 - INFO - Extraction des données depuis la base de données...
+2025-12-01 12:15:35,756 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-11-30T12%3A15%3A35.453441 "HTTP/2 200 OK"
+2025-12-01 12:15:35,777 - INFO - Données extraites: 1000 lignes
+2025-12-01 12:15:35,777 - INFO - Début des conversions d'unités
+2025-12-01 12:15:35,777 - INFO - Conversions d'unités terminées
+2025-12-01 12:15:35,777 - INFO - ✅ Conversion des unités terminée.
+2025-12-01 12:15:35,777 - INFO - ✨ Pipeline Transform terminé avec succès!
+2025-12-01 12:15:35,785 - INFO - 🎉 Pipeline terminé avec succès!
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+
+📥 Données initiales extraites: 1000 lignes, 7 colonnes
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+
+==================================================
+📊 RÉSUMÉ DU PIPELINE
+==================================================
+📈 Nombre total d'enregistrements: 1000
+🏷️  Nombre de colonnes: 7
+📋 Colonnes disponibles: ['meas_id', 'turbine_id', 'ts_utc', 'wind_speed_mps', 'temperature_k', 'vibration_mm_s', 'consumption_kwh']
+
+📊 Aperçu des données:
+   meas_id turbine_id  ... vibration_mm_s  consumption_kwh
+0   174273       T001  ...          10.74           901.00
+1   174274       T002  ...           1.49          1125.48
+2   174275       T001  ...           3.93           960.68
+3   174276       T002  ...           4.56           955.04
+4   174277       T001  ...          10.04           889.95
+
+[5 rows x 7 columns]
+
+✅ Aucune valeur manquante détectée
