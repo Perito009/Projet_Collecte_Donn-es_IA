@@ -10,9 +10,8 @@ import csv
 def init_supabase_client() -> Client:
     """
     Initialise et retourne un client Supabase en chargeant les variables d'environnement.
-
-    Returns:
-        Client: Une instance du client Supabase configurée.
+    Toutes les communications avec Supabase utilisent automatiquement HTTPS (TLS 1.2+),
+    garantissant un chiffrement sécurisé des données échangées.
     """
     env_path = Path(__file__).with_name(".env")
     load_dotenv(env_path)
@@ -23,6 +22,11 @@ def init_supabase_client() -> Client:
     if not url or not key:
         raise ValueError("Les variables d'environnement SUPABASE_URL et SUPABASE_KEY doivent être définies.")
 
+    # Vérification simple : l'URL doit obligatoirement utiliser HTTPS
+    if not url.startswith("https://"):
+        raise ValueError("L'URL Supabase doit utiliser HTTPS afin d'assurer le chiffrement TLS.")
+
+    # Le client Supabase utilise TLS automatiquement avec HTTPS.
     supabase: Client = create_client(
         url,
         key,
@@ -35,8 +39,9 @@ def init_supabase_client() -> Client:
 
     return supabase
 
+
 def extract_data_to_dataframe():
-    # Initialiser le client Supabase
+    # Initialiser le client Supabase (TLS activé automatiquement via HTTPS)
     supabase = init_supabase_client()
 
     # Calculer la date et l'heure d'il y a 24 heures
@@ -73,6 +78,7 @@ def extract_data_to_dataframe():
         df = pd.DataFrame(response.data)
         print("Data successfully stored in DataFrame")
         return df
+
     else:
         print("No data found for the last 24 hours.")
         return pd.DataFrame()  # Retourne un DataFrame vide si aucune donnée n'est trouvée

@@ -237,3 +237,117 @@ Data successfully stored in DataFrame
 [5 rows x 7 columns]
 
 ✅ Aucune valeur manquante détectée
+2025-12-02 15:11:18,487 - INFO - 🎯 Démarrage du pipeline complet...
+2025-12-02 15:11:18,738 - INFO - Aucun fichier de production détecté. Lancement de l'extraction depuis la base de données...
+2025-12-02 15:11:18,738 - INFO - Début de l'extraction depuis la base de données...
+2025-12-02 15:11:19,138 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-01T15%3A11%3A18.816350 "HTTP/2 200 OK"
+2025-12-02 15:11:19,197 - INFO - ✅ Extraction DB terminée. 1000 lignes extraites.
+2025-12-02 15:11:19,197 - INFO - 🚀 Démarrage du pipeline de transformation...
+2025-12-02 15:11:19,197 - INFO - Début du nettoyage des données...
+2025-12-02 15:11:19,199 - INFO - Extraction des données...
+2025-12-02 15:11:19,504 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-01T15%3A11%3A19.224636 "HTTP/2 200 OK"
+2025-12-02 15:11:19,526 - INFO - Nettoyage des données...
+2025-12-02 15:11:19,527 - INFO - Nettoyage terminé
+2025-12-02 15:11:19,527 - INFO - ✅ Nettoyage terminé. 1000 lignes traitées.
+2025-12-02 15:11:19,527 - INFO - Début de la normalisation des dates...
+2025-12-02 15:11:19,527 - INFO - Extraction des données depuis la base de données...
+2025-12-02 15:11:19,875 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-01T15%3A11%3A19.549943 "HTTP/2 200 OK"
+2025-12-02 15:11:19,896 - INFO - Données extraites: 1000 lignes, 7 colonnes
+2025-12-02 15:11:19,896 - INFO - Début de la normalisation de la colonne 'ts_utc'
+2025-12-02 15:11:19,937 - INFO - Normalisation terminée: 1000 timestamps traités, 0 valeurs manquantes
+2025-12-02 15:11:19,937 - INFO - ✅ Normalisation des dates terminée.
+2025-12-02 15:11:19,937 - INFO - Début de la conversion des unités...
+2025-12-02 15:11:19,937 - INFO - Extraction des données depuis la base de données...
+2025-12-02 15:11:20,235 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-01T15%3A11%3A19.961698 "HTTP/2 200 OK"
+2025-12-02 15:11:20,255 - INFO - Données extraites: 1000 lignes
+2025-12-02 15:11:20,255 - INFO - Début des conversions d'unités
+2025-12-02 15:11:20,256 - INFO - Conversions d'unités terminées
+2025-12-02 15:11:20,256 - INFO - ✅ Conversion des unités terminée.
+2025-12-02 15:11:20,256 - INFO - ✨ Pipeline Transform terminé avec succès!
+2025-12-02 15:11:20,263 - INFO - 🎉 Pipeline terminé avec succès!
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+
+📥 Données initiales extraites: 1000 lignes, 7 colonnes
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+
+==================================================
+📊 RÉSUMÉ DU PIPELINE
+==================================================
+📈 Nombre total d'enregistrements: 1000
+🏷️  Nombre de colonnes: 7
+📋 Colonnes disponibles: ['meas_id', 'turbine_id', 'ts_utc', 'wind_speed_mps', 'temperature_k', 'vibration_mm_s', 'consumption_kwh']
+
+📊 Aperçu des données:
+   meas_id turbine_id  ... vibration_mm_s  consumption_kwh
+0   177505       T001  ...           0.36          1038.56
+1   177506       T002  ...          10.50          1192.55
+2   177507       T001  ...           2.42          1081.71
+3   177508       T002  ...           2.49           858.27
+4   177509       T001  ...           1.47          1006.64
+
+[5 rows x 7 columns]
+
+✅ Aucune valeur manquante détectée
+2025-12-03 12:18:22,464 - INFO - 🎯 Démarrage du pipeline complet...
+2025-12-03 12:18:22,809 - INFO - Aucun fichier de production détecté. Lancement de l'extraction depuis la base de données...
+2025-12-03 12:18:22,809 - INFO - Début de l'extraction depuis la base de données...
+2025-12-03 12:18:23,821 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-02T12%3A18%3A23.083665 "HTTP/2 200 OK"
+2025-12-03 12:18:23,844 - INFO - ✅ Extraction DB terminée. 1000 lignes extraites.
+2025-12-03 12:18:23,845 - INFO - 🚀 Démarrage du pipeline de transformation...
+2025-12-03 12:18:23,845 - INFO - Début du nettoyage des données...
+2025-12-03 12:18:23,846 - INFO - Extraction des données...
+2025-12-03 12:18:24,168 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-02T12%3A18%3A23.868933 "HTTP/2 200 OK"
+2025-12-03 12:18:24,190 - INFO - Nettoyage des données...
+2025-12-03 12:18:24,196 - INFO - Nettoyage terminé
+2025-12-03 12:18:24,196 - INFO - ✅ Nettoyage terminé. 1000 lignes traitées.
+2025-12-03 12:18:24,196 - INFO - Début de la normalisation des dates...
+2025-12-03 12:18:24,196 - INFO - Extraction des données depuis la base de données...
+2025-12-03 12:18:24,505 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-02T12%3A18%3A24.222336 "HTTP/2 200 OK"
+2025-12-03 12:18:24,577 - INFO - Données extraites: 1000 lignes, 7 colonnes
+2025-12-03 12:18:24,577 - INFO - Début de la normalisation de la colonne 'ts_utc'
+2025-12-03 12:18:24,842 - INFO - Normalisation terminée: 1000 timestamps traités, 0 valeurs manquantes
+2025-12-03 12:18:24,842 - INFO - ✅ Normalisation des dates terminée.
+2025-12-03 12:18:24,842 - INFO - Début de la conversion des unités...
+2025-12-03 12:18:24,843 - INFO - Extraction des données depuis la base de données...
+2025-12-03 12:18:25,164 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-02T12%3A18%3A24.928440 "HTTP/2 200 OK"
+2025-12-03 12:18:25,236 - INFO - Données extraites: 1000 lignes
+2025-12-03 12:18:25,237 - INFO - Début des conversions d'unités
+2025-12-03 12:18:25,237 - INFO - Conversions d'unités terminées
+2025-12-03 12:18:25,237 - INFO - ✅ Conversion des unités terminée.
+2025-12-03 12:18:25,237 - INFO - ✨ Pipeline Transform terminé avec succès!
+2025-12-03 12:18:25,256 - INFO - 🎉 Pipeline terminé avec succès!
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+
+📥 Données initiales extraites: 1000 lignes, 7 colonnes
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully stored in DataFrame
+
+==================================================
+📊 RÉSUMÉ DU PIPELINE
+==================================================
+📈 Nombre total d'enregistrements: 1000
+🏷️  Nombre de colonnes: 7
+📋 Colonnes disponibles: ['meas_id', 'turbine_id', 'ts_utc', 'wind_speed_mps', 'temperature_k', 'vibration_mm_s', 'consumption_kwh']
+
+📊 Aperçu des données:
+   meas_id turbine_id  ... vibration_mm_s  consumption_kwh
+0   180039       T001  ...          10.29           994.51
+1   180040       T002  ...           1.55           979.51
+2   180041       T001  ...          10.67           988.90
+3   180042       T002  ...           8.40          1007.95
+4   180043       T001  ...           3.55          1142.03
+
+[5 rows x 7 columns]
+
+✅ Aucune valeur manquante détectée
