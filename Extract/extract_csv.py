@@ -13,7 +13,6 @@ date;turbin_id;energie_kWh;arret_planifie;arret_non_planifie
 - Certaines lignes peuvent contenir des valeurs manquantes (champs vides)
 """
 import argparse
-import csv
 import calendar
 from datetime import date
 from pathlib import Path
