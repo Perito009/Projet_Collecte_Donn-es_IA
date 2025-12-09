@@ -1609,3 +1609,94 @@ max     198334.000000        NaN  ...      12.000000      1199.920000
 📁 Dashboard généré : dashboard.html
 
 ✅ Dashboard généré avec succès !
+2025-12-09 12:54:07,745 - INFO - 🎯 Démarrage du pipeline complet...
+2025-12-09 12:54:07,997 - INFO - Aucun fichier de production détecté. Lancement de l'extraction depuis la base de données...
+2025-12-09 12:54:07,997 - INFO - Début de l'extraction depuis la base de données...
+2025-12-09 12:54:09,590 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-08T12%3A54%3A08.073883 "HTTP/2 200 OK"
+2025-12-09 12:54:09,619 - INFO - ✅ Extraction DB terminée. 1000 lignes extraites.
+2025-12-09 12:54:09,619 - INFO - 🚀 Démarrage du pipeline de transformation...
+2025-12-09 12:54:09,619 - INFO - Début du nettoyage des données...
+2025-12-09 12:54:09,620 - INFO - Extraction des données...
+2025-12-09 12:54:09,928 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-08T12%3A54%3A09.646782 "HTTP/2 200 OK"
+2025-12-09 12:54:09,951 - INFO - Nettoyage des données...
+2025-12-09 12:54:09,952 - INFO - Nettoyage terminé
+2025-12-09 12:54:09,952 - INFO - ✅ Nettoyage terminé. 1000 lignes traitées.
+2025-12-09 12:54:09,952 - INFO - Début de la normalisation des dates...
+2025-12-09 12:54:09,952 - INFO - Extraction des données depuis la base de données...
+2025-12-09 12:54:10,239 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-08T12%3A54%3A09.979467 "HTTP/2 200 OK"
+2025-12-09 12:54:10,264 - INFO - Données extraites: 1000 lignes, 7 colonnes
+2025-12-09 12:54:10,264 - INFO - Début de la normalisation de la colonne 'ts_utc'
+2025-12-09 12:54:10,305 - INFO - Normalisation terminée: 1000 timestamps traités, 0 valeurs manquantes
+2025-12-09 12:54:10,305 - INFO - ✅ Normalisation des dates terminée.
+2025-12-09 12:54:10,305 - INFO - Début de la conversion des unités...
+2025-12-09 12:54:10,305 - INFO - Extraction des données depuis la base de données...
+2025-12-09 12:54:10,531 - INFO - HTTP Request: GET https://favmeujhdkuoxjthxxgp.supabase.co/rest/v1/raw_measurements?select=%2A&ts_utc=gt.2025-12-08T12%3A54%3A10.331148 "HTTP/2 200 OK"
+2025-12-09 12:54:10,556 - INFO - Données extraites: 1000 lignes
+2025-12-09 12:54:10,556 - INFO - Début des conversions d'unités
+2025-12-09 12:54:10,556 - INFO - Conversions d'unités terminées
+2025-12-09 12:54:10,556 - INFO - ✅ Conversion des unités terminée.
+2025-12-09 12:54:10,556 - INFO - ✨ Pipeline Transform terminé avec succès!
+2025-12-09 12:54:10,564 - INFO - 🎉 Pipeline terminé avec succès!
+Data successfully retrieved from Supabase (1000 rows)
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+
+📥 Données initiales extraites: 1000 lignes, 7 colonnes
+Data successfully retrieved from Supabase (1000 rows)
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully retrieved from Supabase (1000 rows)
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+Data successfully retrieved from Supabase (1000 rows)
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+
+==================================================
+📊 RÉSUMÉ DU PIPELINE
+==================================================
+📈 Nombre total d'enregistrements: 1000
+🏷️  Nombre de colonnes: 7
+📋 Colonnes disponibles: ['meas_id', 'turbine_id', 'ts_utc', 'wind_speed_mps', 'temperature_k', 'vibration_mm_s', 'consumption_kwh']
+
+📊 Aperçu des données:
+   meas_id turbine_id  ... vibration_mm_s  consumption_kwh
+0   197391       T001  ...           3.24          1063.55
+1   197392       T002  ...           7.38           875.44
+2   197393       T001  ...           3.35          1071.11
+3   197394       T002  ...           2.12          1083.31
+4   197395       T001  ...           4.07           976.62
+
+[5 rows x 7 columns]
+
+✅ Aucune valeur manquante détectée
+Data successfully retrieved from Supabase (1000 rows)
+Data successfully saved to /workspaces/Projet_Collecte_Donn-es_IA/Extract/energitic_pipeline/measurements_last_24hours.csv
+📄 DataFrame reçu, génération du dashboard...
+
+=== Aperçu du DataFrame ===
+   meas_id turbine_id  ... vibration_mm_s  consumption_kwh
+0   197391       T001  ...           3.24          1063.55
+1   197392       T002  ...           7.38           875.44
+2   197393       T001  ...           3.35          1071.11
+3   197394       T002  ...           2.12          1083.31
+4   197395       T001  ...           4.07           976.62
+
+[5 rows x 7 columns]
+
+=== Statistiques ===
+              meas_id turbine_id  ... vibration_mm_s  consumption_kwh
+count     1000.000000       1000  ...    1000.000000      1000.000000
+unique            NaN          2  ...            NaN              NaN
+top               NaN       T001  ...            NaN              NaN
+freq              NaN        500  ...            NaN              NaN
+mean    197890.500000        NaN  ...       6.062250      1001.669990
+std        288.819436        NaN  ...       3.490221       114.988074
+min     197391.000000        NaN  ...       0.000000       800.050000
+25%     197640.750000        NaN  ...       3.187500       903.697500
+50%     197890.500000        NaN  ...       6.225000      1002.365000
+75%     198140.250000        NaN  ...       9.010000      1102.840000
+max     198390.000000        NaN  ...      12.000000      1199.920000
+
+[11 rows x 7 columns]
+📊 Histogramme généré : wind_speed_hist.png
+
+📁 Dashboard généré : dashboard.html
+
+✅ Dashboard généré avec succès !
