@@ -5,13 +5,13 @@ Ce projet vise à concevoir un pipeline ETL pour collecter, nettoyer et stocker 
 
 ## Prérequis
 - Python 3.10+
-- PostgreSQL 14+
+- Soupabase
 - Bibliothèques Python : `requests`, `pandas`, `psycopg2`, `matplotlib`
 
 ## Installation
 1. Cloner le dépôt :
    ```bash
-   git clone https://github.com/votre-depot/Projet_Collecte_Données_IA.git
+   git clone https://github.com/Perito009/Projet_Collecte_Donn-es_IA.git
    ```
 
 ## Guide d'installation et d'exécution minimal
@@ -25,9 +25,9 @@ Projet ETL minimal - instructions rapides.
 
 2. Adapter settings.py (conn strings, chemins).
 
-3. Lancer le pipeline en dry-run:
+3. Lancer l'executable du pipeline:
    ```bash
-   python pipeline.py
+   ./run pipeline.sh
    ```
 
 4. Exécuter les tests:
